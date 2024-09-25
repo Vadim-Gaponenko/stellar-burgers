@@ -102,6 +102,7 @@ const App = () => {
             </ProtectedRoute>
           }
         />
+        <Route path='/ingredients/:id' element={<IngredientDetails />} />
         <Route path='*' element={<NotFound404 />} />
       </Routes>
       {background && (
@@ -117,7 +118,7 @@ const App = () => {
           <Route
             path='/ingredients/:id'
             element={
-              <Modal title={'Детали ингредиента'} onClose={() => navigate(-1)}>
+              <Modal title={''} onClose={() => navigate(-1)}>
                 <IngredientDetails />
               </Modal>
             }
