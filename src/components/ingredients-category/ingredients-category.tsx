@@ -18,7 +18,11 @@ export const IngredientsCategory = forwardRef<
       if (!counters[ingredient._id]) counters[ingredient._id] = 0;
       counters[ingredient._id]++;
     });
-    if (bun) counters[bun._id] = 2;
+    if (bun) {
+      counters[bun._id] = (counters[bun._id] || 0) + 2;
+      // Увеличиваем счетчик булки на 2
+    }
+
     return counters;
   }, [burgerConstructor]);
 

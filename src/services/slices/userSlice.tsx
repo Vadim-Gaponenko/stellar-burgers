@@ -12,7 +12,7 @@ import {
   updateUserApi,
   logoutApi,
   TLoginData
-} from '@api';
+} from '../../../src/utils/burger-api';
 import { setCookie } from '../../utils/cookie';
 
 export const register = createAsyncThunk('user/register', registerUserApi);
