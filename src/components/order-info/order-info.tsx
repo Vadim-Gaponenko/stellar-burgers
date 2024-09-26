@@ -4,12 +4,10 @@ import { OrderInfoUI } from '../ui/order-info';
 import { TIngredient, TOrder } from '@utils-types';
 import { useDispatch, useSelector } from '../../services/store';
 import { getIngredients } from '../../services/slices/IngredientsSlice';
-import { getOrderModalData } from '../../services/slices/newOrderSlice';
 import { useParams } from 'react-router-dom';
 import { getOrderByNumberApi } from '@api';
 
 export const OrderInfo: FC = () => {
-  /** TODO: взять переменные orderData и ingredients из стора */
   const [orderData, setOrderData] = useState<TOrder>({
     _id: '',
     createdAt: '',
@@ -35,16 +33,22 @@ export const OrderInfo: FC = () => {
 
     const ingredientsInfo = orderData.ingredients.reduce(
       (acc: TIngredientsWithCount, item) => {
-        if (!acc[item]) {
-          const ingredient = ingredients.find((ing) => ing._id === item);
-          if (ingredient) {
-            acc[item] = {
-              ...ingredient,
-              count: 1
-            };
+        const ingredient = ingredients.find((ing) => ing._id === item);
+        if (ingredient) {
+          if (ingredient.type === 'bun') {
+            if (!acc[item]) {
+              acc[item] = { ...ingredient, count: 2 };
+            }
+          } else {
+            if (!acc[item]) {
+              acc[item] = {
+                ...ingredient,
+                count: 1
+              };
+            } else {
+              acc[item].count++;
+            }
           }
-        } else {
-          acc[item].count++;
         }
 
         return acc;
@@ -69,7 +73,7 @@ export const OrderInfo: FC = () => {
     getOrderByNumberApi(Number(id)).then((data) => {
       setOrderData(data.orders[0]);
     });
-  }, []);
+  }, [id]);
 
   if (!orderInfo) {
     return <Preloader />;
