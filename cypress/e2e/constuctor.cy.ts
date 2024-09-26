@@ -26,7 +26,10 @@ describe('Burger Constructor Tests', () => {
     cy.wait('@getProfile');
   });
   it('проверка нали', () => {
-    cy.get(`[data-cy="constructor"]`).should('not.contain.text', 'Булка 1');
+    cy.get(`[data-cy="constructor-container"]`).should(
+      'not.contain.text',
+      'Булка 1'
+    );
   });
   it('добавление булки', () => {
     cy.get(`[data-cy='ingredient-container']`)
@@ -35,7 +38,10 @@ describe('Burger Constructor Tests', () => {
       .first()
       .find('button')
       .click();
-    cy.get(`[data-cy="constructor"]`).should('contain.text', 'Булка 1');
+    cy.get(`[data-cy="constructor-container"]`).should(
+      'contain.text',
+      'Булка 1'
+    );
     cy.get(`[data-cy='ingredient-container']`)
       .next()
       .next()
@@ -43,7 +49,10 @@ describe('Burger Constructor Tests', () => {
       .first()
       .find('button')
       .click();
-    cy.get(`[data-cy="constructor"]`).should('contain.text', 'Начинка 1');
+    cy.get(`[data-cy="constructor-container"]`).should(
+      'contain.text',
+      'Начинка 1'
+    );
   });
   it(' открытия модального окна', () => {
     cy.contains('Булка 1').click();
@@ -83,7 +92,6 @@ describe('Burger Constructor Tests', () => {
       .find('button')
       .click();
 
-    // добавляем в заказ биокотлету
     cy.get(`[data-cy='ingredient-container']`)
       .next()
       .next()
@@ -92,7 +100,11 @@ describe('Burger Constructor Tests', () => {
       .find('button')
       .click();
 
-    cy.get(`[data-cy='constructor']`).children().last().find('button').click();
+    cy.get(`[data-cy="constructor-container"]`)
+      .children()
+      .last()
+      .find('button')
+      .click();
 
     cy.wait('@order');
 
@@ -100,12 +112,12 @@ describe('Burger Constructor Tests', () => {
 
     cy.get(`[data-cy='modalPopap']`).find('button').click();
 
-    cy.get(`[data-cy='constructor']`)
+    cy.get(`[data-cy="constructor-container"]`)
       .children()
       .first()
       .should('contain.text', 'Выберите булки');
 
-    cy.get(`[data-cy='constructor']`)
+    cy.get(`[data-cy="constructor-container"]`)
       .children()
       .first()
       .next()
